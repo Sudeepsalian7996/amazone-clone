@@ -1,8 +1,8 @@
 import React from 'react'
-import logo from '../images/amazoneLogo.png'
+import logo from '../../images/amazoneLogo.png'
 import SearchIcon from '@mui/icons-material/Search';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
-import '../styles/Header.css';
+import '../../styles/Header.css';
 
 export default function () {
   return (

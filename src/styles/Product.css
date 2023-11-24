@@ -1,0 +1,22 @@
+
+.product__image {
+    width: 130px;
+}
+
+.product__card {
+    padding: 30px;
+    text-align: center;
+    z-index: 1;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 1px 1px 10px -2px;
+
+}
+
+.product__cart__container{
+
+}
+
+.product__cart {
+   
+}

@@ -1,0 +1,14 @@
+.banner__container {
+    width: 100%;
+    max-width: 70%; 
+    position: relative; 
+    margin-bottom: 25px;
+    margin-left: 200px;
+}
+
+.banner__image {
+    width: 100%;
+    max-height: 300px; /* Set your desired maximum height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    object-position: 24px -450px;
+}
