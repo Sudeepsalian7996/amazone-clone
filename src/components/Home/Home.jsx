@@ -13,7 +13,7 @@ function Home() {
             <img src={banner} alt="home_banner" className='image__tag'/>
         </div>
       </div>
-      <Banner />
+      {/* <Banner /> */}
       <div className="product__container">
           <Product />
           <Product />

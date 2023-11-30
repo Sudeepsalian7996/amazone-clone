@@ -9,5 +9,5 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
-    padding: 0px 60px;
+    padding: 0px 20px;
 }

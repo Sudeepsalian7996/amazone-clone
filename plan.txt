@@ -1,0 +1,16 @@
+1-> add to cart should work
+2-> fetch the data from mongodb[fetch the collection]
+3-> infinity loader
+4-> search bar functionality
+5-> sign login page
+6-> order functionality
+7-> payment for orders
+8-> after signin show only the language and EN with country logo(login mobile)
+9-> account and list functionality it should be a dropdown hover
+    a->logout
+    b->your orders
+    c->your wishlist
+    d->payment history
+10-> clicking on the product should show all the details of that particular product.
+11-> Home page set background image multiple and give a button to change bg and automatic bg
+     change for 5-10 seconds
