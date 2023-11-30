@@ -10,6 +10,18 @@
     justify-content: space-around;
 }
 
+@media (max-width: 950px) {
+    .footer__sections {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+    .footer__container {
+        margin-top: 50px;
+        padding: 20px 20px;
+    }    
+}
+
 .footer__titles {
     font-weight: bolder;
     font-size: 16px;

@@ -8,8 +8,37 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
+@media (max-width: 800px) {
+    .navbar__container {
+        position: relative;
+        margin-top: 10px;
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    .header__container {
+        height: 120px;
+        display: block;
+        padding: 10px;
+    }
+
+    .sign__button {
+        position: absolute;
+        top: -90px;
+        right: 0px;
+    }
+}
+
+@media (max-width: 390px) {
+    .header__container {
+        height: 150px;
+    }
+}
 .image_tag {
     width: 95px;
 }
@@ -39,9 +68,9 @@ body {
     outline: none;
 }
 
-.seachbox__input:focus {
+/* .seachbox__input:focus {
     border: 3px solid orange;
-}
+} */
 
 .seachbox__input::placeholder {
     color: grey;
