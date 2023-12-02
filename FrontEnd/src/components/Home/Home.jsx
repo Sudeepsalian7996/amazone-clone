@@ -9,11 +9,10 @@ function Home() {
     <>
        
       <div className='home'>
-        <div className="image__container">
+        <div className="image__container__home">
             <img src={banner} alt="home_banner" className='image__tag'/>
         </div>
       </div>
-      {/* <Banner /> */}
       <div className="product__container">
           <Product />
           <Product />

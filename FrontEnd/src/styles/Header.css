@@ -19,28 +19,35 @@ body {
         margin-top: 10px;
         margin-left: 30px;
         margin-right: 30px;
+        justify-content: space-between;
     }
 
     .header__container {
         height: 120px;
         display: block;
-        padding: 10px;
+        padding: 13px 10px;
     }
 
     .sign__button {
         position: absolute;
-        top: -90px;
+        top: -85px;
         right: 0px;
     }
 }
 
 @media (max-width: 390px) {
     .header__container {
-        height: 150px;
+        height: 130px;
     }
 }
 .image_tag {
     width: 95px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.image_tag:hover {
+    opacity: 0.7;
 }
 
 .search__box {
@@ -55,6 +62,12 @@ body {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     margin-left: -40px;
+    cursor: pointer;
+    transition: opacity 0.9s ease;
+}
+
+.searchbox__icon:hover {
+   opacity: 0.8;
 }
 
 .seachbox__input {
@@ -81,7 +94,7 @@ body {
 .navbar__container {
     color: white;
     display: flex;
-    justify-content: space-between;
+    gap: 20px;
 }
 
 .sign__button > span,
@@ -90,16 +103,26 @@ body {
     font-weight: bolder;
 }
 
-.sign__button {
+.sign__button,
+.return_order__button,
+.your_prime__button {
+    cursor: pointer;
+    transition: opacity 0.3s;
     width: 25%;
 }
 
-.return_order__button {
-    width: 19.5%;
+.sign__button:hover,
+.return_order__button:hover,
+.your_prime__button:hover {
+    opacity: 0.7;
 }
 
-.your_prime__button {
-    width: 15%;
+.sign__button,
+.your_prime__button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
 }
 
 .basket__container {
@@ -107,4 +130,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.basket__container:hover {
+    opacity: 0.7;
 }

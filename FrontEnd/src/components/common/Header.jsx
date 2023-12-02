@@ -17,7 +17,7 @@ export default function () {
           </div>
           <div className='navbar__container'>
               <div className="sign__button">
-                Hello guest <span>Sign in</span>
+                <span>Sign in</span>
               </div>
               <div className="return_order__button">
                 Return <span>& Order</span>
