@@ -1,6 +1,10 @@
 
 .product__image {
-    width: 100px;
+    width: 200px; 
+    height: 150px; 
+    object-fit: scale-down;
+    display: block; 
+    margin: 15px auto;
 }
 
 .product__card {
@@ -31,6 +35,11 @@
 
 .product__price {
     margin-bottom: 10px;
+}
+
+.product__price strong {
+    font-size: larger;
+    margin-left: 3px;
 }
 
 .product__cart__button {
