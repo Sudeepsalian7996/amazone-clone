@@ -10,7 +10,7 @@ function Home() {
   const apiCall = async () => {
     try {
       const data = await axios.get(
-        "http://localhost:3000/products/get-products"
+        "https://amazon-clone-fvsy.onrender.com/products/get-products"
       );
       setDate(data.data);
     } catch (err) {
