@@ -1,41 +1,60 @@
-import React from "react";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import ProductCard from "./ProductCard";
 import "../../styles/Product.css";
 
-function Product({ product }) {
-  const price = product.price;
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+  },
+};
 
-  // Format the number as currency with commas
-  const formattedPrice = price.toLocaleString("en-IN", {
-    currency: "INR",
-  });
-
+function Product({ data }) {
   return (
-    <>
-      <div className="product__card">
-        <div className="product__title">{product.title}</div>
-        <div className="image__container">
-          <img
-            src={product.imageUrl}
-            className="product__image"
-            alt="produt-image"
-          />
-        </div>
-        <div className="product__info">
-          <p className="product__description">
-            {product.description.length > 80
-              ? `${product.description.slice(0, 80)}...`
-              : product.description}
-          </p>
-          <div className="product__price">
-            <small>&#8377;</small>
-            <strong>{`${formattedPrice}.00`}</strong>
-          </div>
-        </div>
-        <div className="product__cart__container">
-          <button className="product__cart__button">Add To Cart</button>
-        </div>
+    <div className="product__container">
+      <div className="product__info">
+        <div className="title">Today's Deals</div>
+        <div className="seeall__link">See all deals</div>
       </div>
-    </>
+      {data?.data?.length > 0 && (
+        <Carousel
+          swipeable={true}
+          draggable={false}
+          showDots={false}
+          responsive={responsive}
+          infinite={true}
+          // autoPlay={true}
+          autoPlaySpeed={2500}
+          centerMode={true}
+          keyBoardControl={true}
+          removeDotsOnDeviceType={["tablet", "mobile"]}
+          removeArrowOnDeviceType={["tablet", "mobile"]}
+          dotListClass="custom-dot-list-style"
+          itemClass="carousel-item-padding-40-px"
+          containerClass="carousel-container"
+        >
+          {/* <div className="product__container"> */}
+          {data?.data?.map((item, index) => (
+            <ProductCard key={index} product={item} />
+          ))}
+          {/* </div> */}
+        </Carousel>
+      )}
+    </div>
   );
 }
 

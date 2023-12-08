@@ -10,7 +10,7 @@ body {
     justify-content: space-evenly;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1001;
 }
 
 @media (max-width: 800px) {
@@ -108,7 +108,7 @@ body {
 .your_prime__button {
     cursor: pointer;
     transition: opacity 0.3s;
-    width: 25%;
+    width: 28%;
 }
 
 .sign__button:hover,

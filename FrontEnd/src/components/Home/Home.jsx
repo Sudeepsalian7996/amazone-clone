@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import banner from "../../images/homebanner.jpg";
 import Product from "./Product";
+import Banner from "./Banner";
+import ProductDiff from "./ProductDiff";
 import "../../styles/Home.css";
 
 function Home() {
@@ -17,24 +18,35 @@ function Home() {
       console.log("error in api call->", err);
     }
   };
-  console.log("data ->", data.data);
+
   useEffect(() => {
     apiCall();
   }, []);
 
   return (
-    <>
+    <div>
       <div className="home">
-        <div className="image__container__home">
+        {/* <div className="image__container__home">
           <img src={banner} alt="home_banner" className="image__tag" />
-        </div>
+        </div> */}
+        <Banner />
       </div>
-      <div className="product__container">
+      <div className="products__container">
+        <ProductDiff data={data.data} />
+        <Product data={data} />
+        <Product data={data} />
+        <ProductDiff data={data.data} />
+        <Product data={data} />
+        <ProductDiff data={data.data} />
+        <Product data={data} />
+        <Product data={data} />
+        {/* <div className="product__container">
         {data?.data?.map((item, index) => (
           <Product key={index} product={item} />
         ))}
+      </div> */}
       </div>
-    </>
+    </div>
   );
 }
 

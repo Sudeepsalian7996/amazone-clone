@@ -36,7 +36,7 @@ p {
 
 .contact__section {
     display: flex;
-    justify-content: space-between;
+    gap:12px;
     flex-direction: column;
 }
 

@@ -1,14 +1,22 @@
-.banner__container {
+.image__container__carousel {
     width: 100%;
-    max-width: 70%; 
-    position: relative; 
-    margin-bottom: 25px;
-    margin-left: 200px;
 }
 
-.banner__image {
+.image__carousel {
     width: 100%;
-    max-height: 300px; /* Set your desired maximum height */
-    object-fit: cover; /* Maintain aspect ratio and cover the container */
-    object-position: 24px -450px;
+    height: 100%;
+    object-fit: contain;
 }
+
+@media (max-width:700px) {
+    .image__carousel {
+        width: 100%;
+        height: 35vh;
+        object-fit: cover;
+    }
+}
+
+.carousel :nth-child(4) {
+   display: none;
+}
+
