@@ -37,7 +37,7 @@ function Product({ data }) {
           showDots={false}
           responsive={responsive}
           infinite={true}
-          // autoPlay={true}
+          autoPlay={true}
           autoPlaySpeed={2500}
           centerMode={true}
           keyBoardControl={true}

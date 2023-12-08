@@ -1,0 +1,104 @@
+.signup__image__container{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.signup__image{
+    width: 100px;
+}
+
+.form__container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.form__structure .react-tel-input .form-control{
+    width: 100%;
+    border: 1px solid #a6a6a6;
+}
+
+.form__title {
+    font-size: 28px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.signup__card{
+    padding: 14px 18px;
+    width: 23%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+@media (max-width:1050px) {
+    .signup__card {
+        width: 80%;
+    }
+}
+
+.form__structure {
+    display: flex;
+    flex-direction: column;
+}
+.react-tel-input input {
+    background-color: red;
+}
+.form__structure label {
+    font-size: 15px;
+    font-weight: 700;
+    padding-left: 2px;
+    margin-bottom: 4px;
+}
+
+.form__structure input {
+    border: 1px solid #a6a6a6;
+    padding: 7px 7px;
+    font-size: 13px;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 17px;
+}
+
+.react-tel-input{
+    margin-bottom: 17px;
+}
+
+.form__structure input:focus {
+    background-color: #F7FEFF;
+    border-color: #007185;
+    box-shadow: 0 0 0 3px #c8f3fa, 0 1px 2px rgba(15,17,17,.15) inset;
+}
+
+.signup__button {
+    border: none;
+    background-color: #edc600;
+    padding: 7px;
+    width: 100%;
+    border-radius: 4px;
+    margin: 8px 0;
+    transition: background-color 0.3s;
+}
+
+.signup__button:hover {
+    cursor: pointer;
+    background-color: #d7b402;
+}
+
+.account {
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.description {
+    font-size: 14px;
+    margin-top: 15px;
+    line-height: 18px;
+}
+
+.error {
+    color: red;
+    margin-top: -10px;
+    margin-bottom: 5px;
+}

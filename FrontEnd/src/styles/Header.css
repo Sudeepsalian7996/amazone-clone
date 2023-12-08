@@ -97,10 +97,12 @@ body {
     gap: 20px;
 }
 
-.sign__button > span,
-.return_order__button > span,
-.your_prime__button > span {
+.sign__button > span > a,
+.return_order__button > span> a,
+.your_prime__button > span> a {
     font-weight: bolder;
+    text-decoration: none;
+    color: white;
 }
 
 .sign__button,
