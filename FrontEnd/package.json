@@ -17,6 +17,7 @@
     "axios": "^1.6.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.12.0",
     "react-material-ui-carousel": "^3.4.2",
     "react-multi-carousel": "^2.8.4",
     "react-phone-input-2": "^2.15.1",
