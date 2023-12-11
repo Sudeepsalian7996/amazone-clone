@@ -45,7 +45,7 @@ const AddProduct = () => {
       setDescriptionError(true);
       setTimeout(() => {
         setDescriptionError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     } else {
       setDescriptionError(false);
@@ -55,7 +55,7 @@ const AddProduct = () => {
       setTitleError(true);
       setTimeout(() => {
         setTitleError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     } else setTitleError(false);
 
@@ -79,7 +79,7 @@ const AddProduct = () => {
       setImageUrlError(true);
       setTimeout(() => {
         setImageUrlError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     }
 
@@ -90,7 +90,7 @@ const AddProduct = () => {
       setPriceError(true);
       setTimeout(() => {
         setPriceError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     } else setPriceError(false);
 
@@ -102,7 +102,7 @@ const AddProduct = () => {
       setOfferError(true);
       setTimeout(() => {
         setOfferError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     } else setOfferError(false);
 
@@ -114,7 +114,7 @@ const AddProduct = () => {
       setRatingError(true);
       setTimeout(() => {
         setRatingError(false);
-      }, 2000);
+      }, 3000);
       isValid = false;
     } else setRatingError(false);
 
@@ -122,7 +122,7 @@ const AddProduct = () => {
       setSuccess(true);
       toast.success("Product added successfully", {
         position: "top-center",
-        autoClose: 2000,
+        autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -130,14 +130,14 @@ const AddProduct = () => {
         progress: undefined,
         theme: "light",
       });
-      // setInputData(() => ({
-      //   [title]: "",
-      //   [description]: "",
-      //   [imageurl]: "",
-      //   [price]: "",
-      //   [rating]: "",
-      //   [offer]: "",
-      // }));
+      setInputData(() => ({
+        [title]: "",
+        [description]: "",
+        [imageurl]: "",
+        [price]: "",
+        [rating]: "",
+        [offer]: "",
+      }));
     } else {
       setSuccess(false);
     }

@@ -103,3 +103,20 @@
     margin-bottom: 5px;
     font-size: 13px;
 }
+
+@media (max-width:700px){
+    .form__structure_addproduct {
+        flex-direction: column;
+    }
+    .col-1 ,
+    .col-2{
+        width: 100%;
+    }
+    .reset__button {
+        padding: 10px 35px;     
+    }
+    .addproduct__buttons {
+        gap: 15px;
+        flex-direction: column;
+    }
+}
