@@ -1,0 +1,105 @@
+.addproduct__image__container{
+    text-align: center;
+    margin-top: 15px;
+}
+
+.addproduct__image{
+    width: 100px;
+}
+
+.addproduct__title {
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    text-align: center;
+}
+
+
+.addproduct__card{
+    padding: 14px 18px;
+    width: 75%;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+}
+
+.form__structure_addproduct input,
+.form__structure_addproduct textarea{
+    border: 1px solid #a6a6a6;
+    padding: 7px 7px;
+    font-size: 13px;
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 17px;
+}
+
+.form__structure_addproduct {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.form__structure_addproduct label {
+    font-size: 15px;
+    font-weight: 700;
+    padding-left: 2px;
+    margin-bottom: 4px;
+}
+
+.form__structure_addproduct input:focus,
+.form__structure_addproduct textarea:focus {
+    background-color: #F7FEFF;
+    border-color: #007185;
+    box-shadow: 0 0 0 3px #c8f3fa, 0 1px 2px rgba(15,17,17,.15) inset;
+}
+
+.col-1 {
+    display: flex;
+    flex-direction: column;
+    width: 55%;
+}
+
+.col-2 {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+}
+
+.addproduct__buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0px;
+}
+
+.reset__button {
+    border: none;
+    padding: 10px 45px;
+    background-color: orange;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.add_prod__button {
+    border: none;
+    padding: 10px 26px;
+    background-color: #FFD814;
+    border-radius: 6px;
+    transition: background-color 0.3s;
+}
+
+.reset__button:hover {
+    cursor: pointer;
+    background-color: #d98d02;
+}
+
+.add_prod__button:hover {
+    cursor: pointer;
+    background-color: #d7b402;
+}
+
+.error__addproduct {
+    color: red;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    font-size: 13px;
+}

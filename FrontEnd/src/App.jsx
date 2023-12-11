@@ -8,6 +8,7 @@ import "./App.css";
 import Footer from "./components/common/Footer";
 import { Route, Routes } from "react-router-dom";
 import CartItems from "./components/cart/CartItems";
+import AddProduct from "./components/add product/AddProduct";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/getproduct-detail/:id" element={<ProductDetail />} />
         <Route path="/cart-items" element={<CartItems />} />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
       <Footer />
     </>

@@ -80,6 +80,7 @@
 
 .delete {
     color: #0066C0;
+    font-size: 13px;
 }
 
 .delete:hover {
