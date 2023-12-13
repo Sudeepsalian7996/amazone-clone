@@ -18,6 +18,18 @@ const productSchema = new Schema({
         type : Number,
         required: true
     },
+    offer: {
+        type : Number,
+        required: true
+    },
+    rating: {
+        type:Number,
+        required: true
+    },
+    userId:{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }
 })
 
 module.exports = mongoose.model('product', productSchema)

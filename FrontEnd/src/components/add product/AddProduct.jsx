@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../../styles/AddProduct.css";
@@ -37,6 +38,41 @@ const AddProduct = () => {
       [rating]: "",
       [offer]: "",
     }));
+  };
+
+  const apiHandler = async () => {
+    try {
+      const data = await axios.post(
+        `${import.meta.env.VITE_HOSTNAME}/products/add-products`,
+        inputData
+      );
+
+      if (data?.data?.success === true) {
+        toast.success("Product added successfully", {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else if (data?.data?.success === false) {
+        toast.error("Please check the details again!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
   };
 
   const productHandler = async () => {
@@ -119,17 +155,8 @@ const AddProduct = () => {
     } else setRatingError(false);
 
     if (isValid) {
+      apiHandler();
       setSuccess(true);
-      toast.success("Product added successfully", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
       setInputData(() => ({
         [title]: "",
         [description]: "",
@@ -190,7 +217,7 @@ const AddProduct = () => {
                 type="text"
                 name="imageurl"
                 id="imageurl"
-                placeholder="Image url"
+                placeholder="Example url: (https://m.media-amazon.com/images/I/71t9JRry+3L._SY679_.jpg)"
                 value={
                   inputData.imageurl === undefined ? "" : inputData.imageurl
                 }

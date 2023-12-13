@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../../images/transparentLogo.png";
@@ -27,9 +28,48 @@ function SignIn() {
     }
   };
 
-  let useDetails = {
+  let userDetails = {
     email: email,
-    password1: password1,
+    password: password1,
+  };
+
+  const apiHandler = async () => {
+    try {
+      const data = await axios.post(
+        `${import.meta.env.VITE_HOSTNAME}/users/signin`,
+        userDetails
+      );
+
+      if (data?.data?.success === true) {
+        localStorage.setItem("token", data?.data?.token);
+        toast.success("Login successful!", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+            navigate("/");
+          },
+        });
+      } else if (data?.data?.success === false) {
+        toast.error(data?.data?.message, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
   };
 
   const buttonHandler = () => {
@@ -43,22 +83,10 @@ function SignIn() {
     }
 
     if (email.length > 4 && password1.length >= 6) {
+      apiHandler();
       setSucess(true);
       setEmail("");
       setPassword1("");
-      toast.success("Login successful", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        onClose: () => {
-          navigate("/");
-        },
-      });
     }
   };
   return (

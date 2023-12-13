@@ -6,14 +6,14 @@ import ProductDiff from "./ProductDiff";
 import "../../styles/Home.css";
 
 function Home() {
-  const [data, setDate] = useState([]);
+  const [data, setData] = useState([]);
 
   const apiCall = async () => {
     try {
       const data = await axios.get(
-        "https://amazon-clone-fvsy.onrender.com/products/get-products"
+        `${import.meta.env.VITE_HOSTNAME}/products/get-products`
       );
-      setDate(data.data);
+      setData(data.data);
     } catch (err) {
       console.log("error in api call->", err);
     }

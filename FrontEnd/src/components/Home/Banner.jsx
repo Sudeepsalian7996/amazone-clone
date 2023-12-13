@@ -45,7 +45,7 @@ function Banner() {
       }}
     >
       {data?.map((image, index) => (
-        <div className="image__container__carousel">
+        <div className="image__container__carousel" key={index}>
           <img src={image} alt="imgae_alt" className="image__carousel" />
         </div>
       ))}

@@ -1,9 +1,35 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Divider } from "@mui/material";
+import CartItemCard from "./CartItemCard";
 import checkmark from "../../images/checkmark.png";
 import "../../styles/CartItems.css";
 
 const CartItems = () => {
+  const [data, setData] = useState([]);
+  const [amount, setAmount] = useState(0);
+  const apiCall = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await axios.get(
+        `${import.meta.env.VITE_HOSTNAME}/cart/get-cart`,
+        { headers: { Authorization: token } }
+      );
+      setData(data?.data);
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
+  };
+
+  useEffect(() => {
+    apiCall();
+  }, []);
+
+  const amountHandler = (total) => {
+    let x = amount + total;
+    setAmount(x);
+  };
+  console.log("cart item amt-->", amount);
   return (
     <div className="container">
       <div className="cart_item__container">
@@ -11,37 +37,16 @@ const CartItems = () => {
         <div className="tag">Select all items</div>
         <div className="price__tag">Price</div>
         <Divider />
-        <div className="cart__items">
-          <div className="image__container">
-            <img
-              src="https://m.media-amazon.com/images/I/71t9JRry+3L._SY679_.jpg"
-              alt="cart item"
-            />
-          </div>
-          <div className="item_description__container">
-            <div className="item__title">
-              Engage M1 Perfume Spray For Men, Citrus and Woody, Skin Friendly,
-              120ml, Opens in a new tab Engage M1 Perfume Spray For Men, Citrus
-              and Woody, Skin Friendly, 120ml
-            </div>
-            <div className="stock__tag">In stock</div>
-            <div className="shipping__tag">Eligible for free shipping</div>
-            <div className="image__tag">
-              <img
-                src="https://m.media-amazon.com/images/G/31/marketing/fba/fba-badge_18px._CB485936079_.png"
-                alt="image tag"
-              />
-            </div>
-            <div className="cart_items__feature">
-              <input type="text" placeholder="Qty:" />
-              <div className="delete">Delete</div>
-            </div>
-          </div>
-          <div className="item__price">&#8377;7872.00</div>
-        </div>
-        <Divider />
+        {data?.data?.map((item, index) => (
+          <CartItemCard
+            key={index}
+            product={item}
+            cart={data?.cart}
+            amountHandler={amountHandler}
+          />
+        ))}
         <div className="sub__total">
-          Subtotal (3 items): <b>&#8377;2,892.00</b>
+          Subtotal ({data?.data?.length} items): <b>&#8377;2,892.00</b>
         </div>
       </div>
 
@@ -56,7 +61,7 @@ const CartItems = () => {
           </div>
         </div>
         <div className="right_sub__total">
-          Subtotal (3 items): <b>&#8377;2,892.00</b>
+          Subtotal ({data?.data?.length} items): <b>&#8377;2,892.00</b>
         </div>
         <button className="buy__button">Proceed to buy</button>
         <div className="emi__description">

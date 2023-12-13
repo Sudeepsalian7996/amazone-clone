@@ -11,6 +11,10 @@
     justify-content: center;
 }
 
+.product_image__container {
+    height: 500px;
+}
+
 .product__image{
     width: 75%;
 }

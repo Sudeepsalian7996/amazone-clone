@@ -6,6 +6,8 @@ const product = require('../controller/productsController')
 
 routes.get('/get-products',product.getProducts)
 
-routes.get('/add-products', product.addProducts)
+routes.get('/product-detail/:id',product.getProductDetail)
+
+routes.post('/add-products', product.addProducts)
 
 module.exports = routes ;

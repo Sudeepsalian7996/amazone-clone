@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -48,13 +49,51 @@ function SignUp() {
     }
   };
 
-  let useDetails = {
+  let userDetails = {
     name: name,
     email: email,
     phoneNumber: phoneNumber,
     password1: password1,
     password2: password2,
   };
+
+  const apiHandler = async () => {
+    try {
+      const data = await axios.post(
+        `${import.meta.env.VITE_HOSTNAME}/users/signup`,
+        userDetails
+      );
+      if (data?.data?.success === true) {
+        toast.success("You have successfully signed up", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          onClose: () => {
+            navigate("/");
+          },
+        });
+      } else if (data?.data?.success === false) {
+        toast.error("User already exist", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
+  };
+
   const buttonHandler = () => {
     setPassword2Error(false);
     if (password1 !== password2) {
@@ -79,25 +118,13 @@ function SignUp() {
       password1.length >= 6 &&
       password1 === password2
     ) {
+      apiHandler();
       setSucess(true);
       setName("");
       setEmail("");
       setPhoneNumber("");
       setPassword1("");
       setPassword2("");
-      toast.success("You have successfully signed up", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        onClose: () => {
-          navigate("/");
-        },
-      });
     }
   };
   return (

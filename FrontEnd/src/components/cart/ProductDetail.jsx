@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import "../../styles/ProductDetail.css";
 
 const ProductDetail = () => {
+  const [data, setData] = useState([]);
+  const [sucess, setSucess] = useState(false);
+
   const starRating = (star) => {
     return Array.from({ length: 5 }, (rating = star, index) => {
       let number = index + 0.5;
@@ -21,52 +28,137 @@ const ProductDetail = () => {
       );
     });
   };
+
+  const { id } = useParams();
+
+  const apiCall = async () => {
+    try {
+      const data = await axios.get(
+        `${import.meta.env.VITE_HOSTNAME}/products/product-detail/${id}`
+      );
+      setData(data.data);
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
+  };
+
+  useEffect(() => {
+    apiCall();
+  }, []);
+
+  const cartHandler = async () => {
+    const token = localStorage.getItem("token");
+    try {
+      const data = await axios.post(
+        `${import.meta.env.VITE_HOSTNAME}/cart/add-cart/${id}`,
+        {},
+        { headers: { Authorization: token } }
+      );
+
+      if (data?.data?.success === true) {
+        setSucess(true);
+        toast.success("Product added to cart", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      } else if (data?.data?.success === false) {
+        toast.error("Something went wrong try after few minutes", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
+  };
+  const savedPrice =
+    (Number(data?.data?.price) * Number(data?.data?.offer)) / 100;
+
+  const totalPrice = Number(data?.data?.price) - savedPrice;
+
+  const date = new Date();
+  const options = { month: "short" };
+  const currentMonth = date.toLocaleDateString("en-US", options);
+  const currentDate = date.getDate();
   return (
     <>
       <div className="product_detail__container">
         <div className="product__left">
           <div className="product_image__container">
             <img
-              src="https://m.media-amazon.com/images/I/71t9JRry+3L._SY679_.jpg"
+              src={data?.data?.imageUrl}
               className="product__image"
               alt="product image"
             />
           </div>
           <div className="button__container">
-            <button className="add_cart__button">Add to cart</button>
+            <button
+              className="add_cart__button"
+              onClick={cartHandler}
+              disabled={sucess}
+            >
+              {sucess ? "Added to cart" : "Add to cart"}
+            </button>
+
             <button className="buy__now">Buy now</button>
           </div>
         </div>
+        {sucess && (
+          <div>
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </div>
+        )}
         <div className="product_right__container">
           <div className="product__right">
             <div className="product__title">
-              Cetaphil Face Wash Gentle Skin Cleanser for Dry to Normal,
-              Sensitive Skin, 125 ml Hydrating Face Wash with Niacinamide,
-              Vitamin B5
+              {data?.data?.title.length < 67
+                ? `${data?.data?.title} Comfortable and Trendy for Every Occasion on Amazon`
+                : data?.data?.title}
             </div>
             <div className="rating">
-              <span>4.5</span> {starRating(4.5)}
+              <span>{data?.data?.rating}</span> {starRating(data?.data?.rating)}
             </div>
             <div className="product__MRP">
-              M.R.P : &#8377;<s>1192.00</s>
+              M.R.P : &#8377;<s>{data?.data?.price}.00</s>
             </div>
             <div className="product__deal">
-              Deal of the day : <span>&#8377;645.00</span>
+              Deal of the day : <span>&#8377;{totalPrice}.00</span>
             </div>
             <div className="product__save">
-              You save : <span> &#8377;420.00 (47%)</span>
+              You save :{" "}
+              <span> &#8377;{`${savedPrice}.00 (${data?.data?.offer}%)`}</span>
             </div>
-            <div className="product__delivery">FREE DELIVERY : Oct 8 - 21</div>
+            <div className="product__delivery">
+              FREE DELIVERY : {currentMonth} {currentDate} -{" "}
+              {currentDate < 29 ? currentDate + 2 : 1}
+            </div>
             <div className="proudct__description">
               <span>About this item: </span>
               <br />
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aspernatur, id. Ab, rem quia. Veritatis voluptate ex minus
-              distinctio? Reiciendis omnis quam corporis ut dolor blanditiis
-              dolore a hic numquam voluptatibus unde, minima perferendis magnam,
-              sint labore temporibus minus ipsam officiis! Tenetur sit facere
-              tempore minus quod impedit culpa! Necessitatibus sequi quia autem
-              architecto doloremque ipsa. Sit odit assumenda pariatur qui?
+              {data?.data?.description}
             </div>
           </div>
         </div>
