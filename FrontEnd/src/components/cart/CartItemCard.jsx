@@ -1,19 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Divider } from "@mui/material";
+import axios from "axios";
+import { CartContext } from "../../context/CartCount";
 
-const CartItemCard = ({ product, cart, amountHandler }) => {
+const CartItemCard = ({ product, cart, deleteRender }) => {
+  const cartCount = useContext(CartContext);
+
   let quantity = 0;
-  let totalAmount = 0;
   for (const quant of cart) {
     if (quant.product === product._id) {
       quantity = quant.quantity;
-      totalAmount += quant.quantity * product.price;
     }
   }
-  useEffect(() => {
-    amountHandler(totalAmount);
-  }, []);
+
+  const deleteHandler = async () => {
+    try {
+      deleteRender();
+      cartCount.countHandler();
+      const token = localStorage.getItem("token");
+      const deleteData = await axios.delete(
+        `${import.meta.env.VITE_HOSTNAME}/cart/delete-cart/${product._id}`,
+        { headers: { Authorization: token } }
+      );
+    } catch (err) {
+      console.log("delete handler cart item card", err);
+    }
+  };
+
   return (
     <>
       <div className="cart__items">
@@ -46,7 +60,9 @@ const CartItemCard = ({ product, cart, amountHandler }) => {
             <div className="quantity">
               Qty: <strong>{quantity}</strong>
             </div>
-            <div className="delete">Delete</div>
+            <div className="delete" onClick={deleteHandler}>
+              Delete
+            </div>
           </div>
         </div>
         <div className="item__price">&#8377;{product?.price}.00</div>

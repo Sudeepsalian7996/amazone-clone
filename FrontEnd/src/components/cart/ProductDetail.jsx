@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -6,10 +6,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
 import "../../styles/ProductDetail.css";
+import { CartContext } from "../../context/CartCount";
 
 const ProductDetail = () => {
   const [data, setData] = useState([]);
   const [sucess, setSucess] = useState(false);
+  const cartCount = useContext(CartContext);
 
   const starRating = (star) => {
     return Array.from({ length: 5 }, (rating = star, index) => {
@@ -36,7 +38,7 @@ const ProductDetail = () => {
       const data = await axios.get(
         `${import.meta.env.VITE_HOSTNAME}/products/product-detail/${id}`
       );
-      setData(data.data);
+      setData(data?.data);
     } catch (err) {
       console.log("error in api call->", err);
     }
@@ -49,14 +51,16 @@ const ProductDetail = () => {
   const cartHandler = async () => {
     const token = localStorage.getItem("token");
     try {
-      const data = await axios.post(
+      const response = await axios.post(
         `${import.meta.env.VITE_HOSTNAME}/cart/add-cart/${id}`,
-        {},
+        { price: data?.data?.price },
         { headers: { Authorization: token } }
       );
 
-      if (data?.data?.success === true) {
+      if (response?.data?.success === true) {
         setSucess(true);
+        //setting the context for cart
+        cartCount.countHandler();
         toast.success("Product added to cart", {
           position: "top-center",
           autoClose: 2000,
@@ -67,7 +71,11 @@ const ProductDetail = () => {
           progress: undefined,
           theme: "light",
         });
-      } else if (data?.data?.success === false) {
+        setTimeout(() => {
+          setSucess(false);
+        }, 3000);
+      } else if (response?.data?.success === false) {
+        setSucess(true);
         toast.error("Something went wrong try after few minutes", {
           position: "top-center",
           autoClose: 2000,
@@ -78,6 +86,9 @@ const ProductDetail = () => {
           progress: undefined,
           theme: "light",
         });
+        setTimeout(() => {
+          setSucess(false);
+        }, 2000);
       }
     } catch (err) {
       console.log("error in api call->", err);
@@ -92,6 +103,7 @@ const ProductDetail = () => {
   const options = { month: "short" };
   const currentMonth = date.toLocaleDateString("en-US", options);
   const currentDate = date.getDate();
+
   return (
     <>
       <div className="product_detail__container">

@@ -7,7 +7,8 @@ import "../../styles/CartItems.css";
 
 const CartItems = () => {
   const [data, setData] = useState([]);
-  const [amount, setAmount] = useState(0);
+  const [render, setRender] = useState(0);
+
   const apiCall = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -20,16 +21,21 @@ const CartItems = () => {
       console.log("error in api call->", err);
     }
   };
-
   useEffect(() => {
     apiCall();
-  }, []);
+  }, [render]);
 
-  const amountHandler = (total) => {
-    let x = amount + total;
-    setAmount(x);
+  let totalAmount = 0;
+  if (data.cart !== undefined) {
+    for (const amt of data?.cart) {
+      totalAmount += amt?.price * amt?.quantity;
+    }
+  }
+
+  const deleteRerender = () => {
+    setRender((prev) => prev + 1);
   };
-  console.log("cart item amt-->", amount);
+
   return (
     <div className="container">
       <div className="cart_item__container">
@@ -42,11 +48,11 @@ const CartItems = () => {
             key={index}
             product={item}
             cart={data?.cart}
-            amountHandler={amountHandler}
+            deleteRender={deleteRerender}
           />
         ))}
         <div className="sub__total">
-          Subtotal ({data?.data?.length} items): <b>&#8377;2,892.00</b>
+          Subtotal ({data?.data?.length} items): <b>&#8377;{totalAmount}.00</b>
         </div>
       </div>
 
@@ -61,7 +67,7 @@ const CartItems = () => {
           </div>
         </div>
         <div className="right_sub__total">
-          Subtotal ({data?.data?.length} items): <b>&#8377;2,892.00</b>
+          Subtotal ({data?.data?.length} items): <b>&#8377;{totalAmount}.00</b>
         </div>
         <button className="buy__button">Proceed to buy</button>
         <div className="emi__description">

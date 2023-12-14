@@ -13,17 +13,20 @@ exports.getCart = async (req, res) => {
 
    }catch(err){
      res.json({success:false, Error:err})
-   }
-    
+   }   
 }
 
 exports.addCart = async (req, res) => {
     try{
         const userId = req.user[0]._id;
         const productId = req.params.productId;
+        const price = req.body.price;
         
         const filter = { user: userId, product: productId };
-        const update =  { $inc: { quantity: 1 } };
+        const update = {
+            $inc: { quantity: 1 },
+            $set: { price: price }
+          };
 
         const existingData = await cartSchema.findOneAndUpdate(
             filter,
@@ -34,5 +37,17 @@ exports.addCart = async (req, res) => {
     }catch(err){
         res.json({success:false,Error:err})
     }
+}
 
+exports.deleteCart = async (req, res) => {
+    try{
+        const productId = req.params.productId;
+        const userId = req.user[0]._id;
+        const result = await cartSchema.deleteOne({
+            user: userId,
+            product: productId,
+          });
+    }catch(err){
+        res.json({success:false,Error:err})
+    }
 }

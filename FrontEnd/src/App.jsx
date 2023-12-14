@@ -9,20 +9,23 @@ import Footer from "./components/common/Footer";
 import { Route, Routes } from "react-router-dom";
 import CartItems from "./components/cart/CartItems";
 import AddProduct from "./components/add product/AddProduct";
+import CartContextProvider from "./context/CartCount";
 
 function App() {
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/getproduct-detail/:id" element={<ProductDetail />} />
-        <Route path="/cart-items" element={<CartItems />} />
-        <Route path="/add-product" element={<AddProduct />} />
-      </Routes>
-      <Footer />
+      <CartContextProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/getproduct-detail/:id" element={<ProductDetail />} />
+          <Route path="/cart-items" element={<CartItems />} />
+          <Route path="/add-product" element={<AddProduct />} />
+        </Routes>
+        <Footer />
+      </CartContextProvider>
     </>
   );
 }

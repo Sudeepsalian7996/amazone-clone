@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import logo from "../../images/amazoneLogo.png";
 import SearchIcon from "@mui/icons-material/Search";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "../../styles/Header.css";
+import { CartContext } from "../../context/CartCount";
 
 export default function () {
+  const countObj = useContext(CartContext);
+  const [data, setData] = useState([]);
+
+  const apiCall = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const data = await axios.get(
+        `${import.meta.env.VITE_HOSTNAME}/cart/get-cart`,
+        { headers: { Authorization: token } }
+      );
+      setData(data?.data);
+    } catch (err) {
+      console.log("error in api call->", err);
+    }
+  };
+
+  useEffect(() => {
+    apiCall();
+  }, [countObj.count]);
+
   return (
     <>
       <div className="header__container">
@@ -43,7 +64,7 @@ export default function () {
             <Link to={"/cart-items"}>
               <ShoppingCartIcon className="basket__icon" />
             </Link>
-            <span className="basket__count">0</span>
+            <span className="basket__count">{data?.data?.length}</span>
           </div>
         </div>
       </div>

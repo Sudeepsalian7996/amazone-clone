@@ -9,4 +9,6 @@ routes.get('/get-cart', middleware.userAuthontication, cart.getCart)
 
 routes.post('/add-cart/:productId', middleware.userAuthontication, cart.addCart)
 
+routes.delete('/delete-cart/:productId',middleware.userAuthontication, cart.deleteCart)
+
 module.exports = routes ;
