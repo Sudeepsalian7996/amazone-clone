@@ -9,6 +9,7 @@ require('dotenv').config();
 const product = require('./routes/productsRoutes')
 const user = require('./routes/user')
 const cart = require('./routes/cartRouter')
+const order = require('./routes/orderRouter')
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(bodyparser.json())
 app.use('/products',product)
 app.use('/users',user)
 app.use('/cart',cart)
+app.use('/order',order)
 
 //connection to database and the app running
 mongoose.connect(process.env.mongodbUrl)

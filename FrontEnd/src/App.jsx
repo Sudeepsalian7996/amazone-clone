@@ -9,6 +9,7 @@ import Footer from "./components/common/Footer";
 import { Route, Routes } from "react-router-dom";
 import CartItems from "./components/cart/CartItems";
 import AddProduct from "./components/add product/AddProduct";
+import Order from "./components/order/Order";
 import CartContextProvider from "./context/CartCount";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route path="/getproduct-detail/:id" element={<ProductDetail />} />
           <Route path="/cart-items" element={<CartItems />} />
           <Route path="/add-product" element={<AddProduct />} />
+          <Route path="/order-return" element={<Order />} />
         </Routes>
         <Footer />
       </CartContextProvider>

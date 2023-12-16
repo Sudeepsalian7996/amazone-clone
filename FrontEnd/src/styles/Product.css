@@ -26,12 +26,13 @@
     color: #007185;
     display: flex;
     align-items: center;
+    font-size: 14px;
 }
 
-.seeall__link:hover{
+/* .seeall__link:hover{
     cursor: pointer;
     text-decoration: underline;
-}
+} */
 
 .carousel-container button{
    height: 80px;

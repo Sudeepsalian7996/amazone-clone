@@ -11,6 +11,8 @@ import { CartContext } from "../../context/CartCount";
 const ProductDetail = () => {
   const [data, setData] = useState([]);
   const [sucess, setSucess] = useState(false);
+  const [orderSuccess, setOrderSuccess] = useState(false);
+
   const cartCount = useContext(CartContext);
 
   const starRating = (star) => {
@@ -48,8 +50,8 @@ const ProductDetail = () => {
     apiCall();
   }, []);
 
+  const token = localStorage.getItem("token");
   const cartHandler = async () => {
-    const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_HOSTNAME}/cart/add-cart/${id}`,
@@ -104,6 +106,59 @@ const ProductDetail = () => {
   const currentMonth = date.toLocaleDateString("en-US", options);
   const currentDate = date.getDate();
 
+  const buyNowHandler = async () => {
+    var options = {
+      key: "rzp_test_UafHRYeLm92SQK",
+      key_secret: "wuLxONl4exspaeHCygohimqC",
+      amount: parseInt(data?.data?.price * 100),
+      currency: "INR",
+      order_receipt: "order_rcptid_",
+      name: "amazon-clone",
+      description: "Payment is secured",
+      handler: async function (response) {
+        const data = await axios.post(
+          `${import.meta.env.VITE_HOSTNAME}/order/add-order/${id}`,
+          { paymentId: response.razorpay_payment_id },
+          { headers: { Authorization: token } }
+        );
+        setOrderSuccess(true);
+        toast.success("Product purchased successfully", {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      },
+
+      theme: {
+        color: "#3399cc",
+      },
+    };
+
+    var pay = new window.Razorpay(options);
+    pay.open();
+    console.log("pay>>", pay);
+    pay.on("payment.failed", async function () {
+      console.log("payment failed console");
+      pay.close();
+      setOrderSuccess(true);
+      toast.error("Payment issue! Try again", {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    });
+  };
+
   return (
     <>
       <div className="product_detail__container">
@@ -124,10 +179,28 @@ const ProductDetail = () => {
               {sucess ? "Added to cart" : "Add to cart"}
             </button>
 
-            <button className="buy__now">Buy now</button>
+            <button className="buy__now" onClick={buyNowHandler}>
+              Buy now
+            </button>
           </div>
         </div>
         {sucess && (
+          <div>
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+          </div>
+        )}
+        {orderSuccess && (
           <div>
             <ToastContainer
               position="top-center"

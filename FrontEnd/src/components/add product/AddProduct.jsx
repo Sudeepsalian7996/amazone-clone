@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Loader from "../common/Loader";
 import "../../styles/AddProduct.css";
 import logo from "../../images/transparentLogo.png";
 
@@ -21,6 +22,7 @@ const AddProduct = () => {
   const [ratingError, setRatingError] = useState(false);
   const [offerError, setOfferError] = useState(false);
   const [sucess, setSuccess] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const inputHandler = (e) => {
     setInputData((prevData) => ({
@@ -42,12 +44,14 @@ const AddProduct = () => {
 
   const apiHandler = async () => {
     try {
+      setLoader(true);
       const data = await axios.post(
         `${import.meta.env.VITE_HOSTNAME}/products/add-products`,
         inputData
       );
 
       if (data?.data?.success === true) {
+        setLoader(false);
         toast.success("Product added successfully", {
           position: "top-center",
           autoClose: 3000,
@@ -171,128 +175,142 @@ const AddProduct = () => {
   };
 
   return (
-    <div className="addproduct__container">
-      <div className="addproduct__image__container">
-        <img src={logo} alt="amazon logo" className="addproduct__image" />
-      </div>
-      <div className="form__container">
-        <div className="addproduct__card">
-          <div className="addproduct__title">Add Product</div>
-          <div className="form__structure_addproduct">
-            <div className="col-1">
-              <label htmlFor="title">Title</label>
-
-              <input
-                type="text"
-                name="title"
-                id="title"
-                placeholder="Product title"
-                value={inputData.title === undefined ? "" : inputData.title}
-                onChange={inputHandler}
-              />
-              {titleError && (
-                <div className="error__addproduct">Title is empty</div>
-              )}
-              <label htmlFor="description">Description</label>
-              <textarea
-                name="description"
-                id="description"
-                cols="30"
-                rows="5"
-                placeholder="Product description (more than 100 characters)"
-                value={
-                  inputData.description === undefined
-                    ? ""
-                    : inputData.description
-                }
-                onChange={inputHandler}
-              ></textarea>
-              {descriptionError && (
-                <div className="error__addproduct">
-                  Description is too small
-                </div>
-              )}
-              <label htmlFor="imageurl">Image Url</label>
-              <input
-                type="text"
-                name="imageurl"
-                id="imageurl"
-                placeholder="Example url: (https://m.media-amazon.com/images/I/71t9JRry+3L._SY679_.jpg)"
-                value={
-                  inputData.imageurl === undefined ? "" : inputData.imageurl
-                }
-                onChange={inputHandler}
-              />
-              {imageUrlError && (
-                <div className="error__addproduct">Image url is not valid</div>
-              )}
-            </div>
-            <div className="col-2">
-              <label htmlFor="price">Price</label>
-              <input
-                type="text"
-                name="price"
-                id="price"
-                placeholder="Price in INR"
-                value={inputData.price === undefined ? "" : inputData.price}
-                onChange={inputHandler}
-              />
-              {priceError && (
-                <div className="error__addproduct">Enter a valid price</div>
-              )}
-              <label htmlFor="offer">Offer</label>
-              <input
-                type="text"
-                name="offer"
-                id="offer"
-                placeholder="Offer in %"
-                value={inputData.offer === undefined ? "" : inputData.offer}
-                onChange={inputHandler}
-              />
-              {offerError && (
-                <div className="error__addproduct">Enter a valid offer</div>
-              )}
-              <label htmlFor="rating">Product Rating</label>
-              <input
-                type="text"
-                name="rating"
-                id="rating"
-                placeholder="Rating out of 5"
-                value={inputData.rating === undefined ? "" : inputData.rating}
-                onChange={inputHandler}
-              />
-              {ratingError && (
-                <div className="error__addproduct">Enter a valid rating</div>
-              )}
-            </div>
+    <>
+      {loader ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <div className="addproduct__container">
+          <div className="addproduct__image__container">
+            <img src={logo} alt="amazon logo" className="addproduct__image" />
           </div>
-          <div className="addproduct__buttons">
-            <button className="add_prod__button" onClick={productHandler}>
-              Add product
-            </button>
-            {sucess && (
-              <div>
-                <ToastContainer
-                  position="top-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                  theme="light"
-                />
+          <div className="form__container">
+            <div className="addproduct__card">
+              <div className="addproduct__title">Add Product</div>
+              <div className="form__structure_addproduct">
+                <div className="col-1">
+                  <label htmlFor="title">Title</label>
+
+                  <input
+                    type="text"
+                    name="title"
+                    id="title"
+                    placeholder="Product title"
+                    value={inputData.title === undefined ? "" : inputData.title}
+                    onChange={inputHandler}
+                  />
+                  {titleError && (
+                    <div className="error__addproduct">Title is empty</div>
+                  )}
+                  <label htmlFor="description">Description</label>
+                  <textarea
+                    name="description"
+                    id="description"
+                    cols="30"
+                    rows="5"
+                    placeholder="Product description (more than 100 characters)"
+                    value={
+                      inputData.description === undefined
+                        ? ""
+                        : inputData.description
+                    }
+                    onChange={inputHandler}
+                  ></textarea>
+                  {descriptionError && (
+                    <div className="error__addproduct">
+                      Description is too small
+                    </div>
+                  )}
+                  <label htmlFor="imageurl">Image Url</label>
+                  <input
+                    type="text"
+                    name="imageurl"
+                    id="imageurl"
+                    placeholder="Example url: (https://m.media-amazon.com/images/I/71t9JRry+3L._SY679_.jpg)"
+                    value={
+                      inputData.imageurl === undefined ? "" : inputData.imageurl
+                    }
+                    onChange={inputHandler}
+                  />
+                  {imageUrlError && (
+                    <div className="error__addproduct">
+                      Image url is not valid
+                    </div>
+                  )}
+                </div>
+                <div className="col-2">
+                  <label htmlFor="price">Price</label>
+                  <input
+                    type="text"
+                    name="price"
+                    id="price"
+                    placeholder="Price in INR"
+                    value={inputData.price === undefined ? "" : inputData.price}
+                    onChange={inputHandler}
+                  />
+                  {priceError && (
+                    <div className="error__addproduct">Enter a valid price</div>
+                  )}
+                  <label htmlFor="offer">Offer</label>
+                  <input
+                    type="text"
+                    name="offer"
+                    id="offer"
+                    placeholder="Offer in %"
+                    value={inputData.offer === undefined ? "" : inputData.offer}
+                    onChange={inputHandler}
+                  />
+                  {offerError && (
+                    <div className="error__addproduct">Enter a valid offer</div>
+                  )}
+                  <label htmlFor="rating">Product Rating</label>
+                  <input
+                    type="text"
+                    name="rating"
+                    id="rating"
+                    placeholder="Rating out of 5"
+                    value={
+                      inputData.rating === undefined ? "" : inputData.rating
+                    }
+                    onChange={inputHandler}
+                  />
+                  {ratingError && (
+                    <div className="error__addproduct">
+                      Enter a valid rating
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
-            <button className="reset__button" onClick={resetHandler}>
-              Reset
-            </button>
+              <div className="addproduct__buttons">
+                <button className="add_prod__button" onClick={productHandler}>
+                  Add product
+                </button>
+                {sucess && (
+                  <div>
+                    <ToastContainer
+                      position="top-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="light"
+                    />
+                  </div>
+                )}
+                <button className="reset__button" onClick={resetHandler}>
+                  Reset
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 

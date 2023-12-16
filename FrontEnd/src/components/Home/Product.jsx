@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import ProductCard from "./ProductCard";
+import { CartContext } from "../../context/CartCount";
 import "../../styles/Product.css";
 
 const responsive = {
@@ -24,11 +26,14 @@ const responsive = {
 };
 
 function Product({ data }) {
+  const context = useContext(CartContext);
+  let search = context.searchText;
+
   return (
     <div className="product__container">
       <div className="product__info">
         <div className="title">Today's Deals</div>
-        <div className="seeall__link">See all deals</div>
+        <div className="seeall__link">Your deals</div>
       </div>
       {data?.data?.length > 0 && (
         <Carousel
@@ -47,11 +52,17 @@ function Product({ data }) {
           itemClass="carousel-item-padding-40-px"
           containerClass="carousel-container"
         >
-          {/* <div className="product__container"> */}
-          {data?.data?.map((item, index) => (
-            <ProductCard key={index} product={item} />
-          ))}
-          {/* </div> */}
+          {data?.data
+            ?.filter((item) => {
+              return search?.toLowerCase() === ""
+                ? item
+                : item?.description
+                    ?.toLowerCase()
+                    ?.includes(search?.toLowerCase());
+            })
+            .map((item, index) => (
+              <ProductCard key={index} product={item} />
+            ))}
         </Carousel>
       )}
     </div>

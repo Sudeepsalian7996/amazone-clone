@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/transparentLogo.png";
+import Loader from "../common/Loader";
 import "../../styles/Signup.css";
 
 function SignUp() {
@@ -22,6 +23,7 @@ function SignUp() {
   const [password1Error, setPassword1Error] = useState(false);
   const [password2Error, setPassword2Error] = useState(false);
   const [sucess, setSucess] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const nameHandler = (e) => {
     setName(e.target.value);
@@ -59,11 +61,14 @@ function SignUp() {
 
   const apiHandler = async () => {
     try {
+      setLoader(true);
       const data = await axios.post(
         `${import.meta.env.VITE_HOSTNAME}/users/signup`,
         userDetails
       );
       if (data?.data?.success === true) {
+        localStorage.setItem("token", data?.data?.token);
+        setLoader(false);
         toast.success("You have successfully signed up", {
           position: "top-center",
           autoClose: 2000,
@@ -78,6 +83,7 @@ function SignUp() {
           },
         });
       } else if (data?.data?.success === false) {
+        setLoader(false);
         toast.error("User already exist", {
           position: "top-center",
           autoClose: 2000,
@@ -128,98 +134,106 @@ function SignUp() {
     }
   };
   return (
-    <div className="signup__container">
-      <div className="signup__image__container">
-        <img src={logo} alt="amazon logo" className="signup__image" />
-      </div>
-      <div className="form__container">
-        <div className="signup__card">
-          <div className="form__title">Create Account</div>
-          <div className="form__structure">
-            <label htmlFor="your_name">Your name</label>
-            <input
-              type="text"
-              id="your_name"
-              value={name}
-              placeholder="First and last name"
-              onChange={nameHandler}
-            />
-            {nameError && <div className="error">Enter valid name</div>}
-            <label htmlFor="phone">Mobile number</label>
-            <PhoneInput
-              country={"in"}
-              placeholder="Mobile number"
-              value={phoneNumber}
-              onChange={(value) => setPhoneNumber(value)}
-            />
-            <label htmlFor="email">Email </label>
-            <input
-              type="email"
-              id="email"
-              value={email}
-              placeholder="Email"
-              onChange={emailhandler}
-            />
-            {emailError && <div className="error">Enter valid email</div>}
-            <label htmlFor="password1">Password </label>
-            <input
-              type="password"
-              id="password1"
-              value={password1}
-              placeholder="Atleast 6 characters"
-              onChange={password1Handler}
-            />
-            {password1Error && (
-              <div className="error">Enter valid password</div>
-            )}
-            <label htmlFor="password2">Password Again</label>
-            <input
-              type="password"
-              id="password2"
-              value={password2}
-              placeholder="Atleast 6 characters"
-              onChange={password2Handler}
-            />
-            {password2Error && (
-              <div className="error">password mismatching</div>
-            )}
+    <>
+      {loader ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <div className="signup__container">
+          <div className="signup__image__container">
+            <img src={logo} alt="amazon logo" className="signup__image" />
           </div>
-          <button className="signup__button" onClick={buttonHandler}>
-            Continue
-          </button>
-          {sucess && (
-            <div>
-              <ToastContainer
-                position="top-center"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-              />
+          <div className="form__container">
+            <div className="signup__card">
+              <div className="form__title">Create Account</div>
+              <div className="form__structure">
+                <label htmlFor="your_name">Your name</label>
+                <input
+                  type="text"
+                  id="your_name"
+                  value={name}
+                  placeholder="First and last name"
+                  onChange={nameHandler}
+                />
+                {nameError && <div className="error">Enter valid name</div>}
+                <label htmlFor="phone">Mobile number</label>
+                <PhoneInput
+                  country={"in"}
+                  placeholder="Mobile number"
+                  value={phoneNumber}
+                  onChange={(value) => setPhoneNumber(value)}
+                />
+                <label htmlFor="email">Email </label>
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  placeholder="Email"
+                  onChange={emailhandler}
+                />
+                {emailError && <div className="error">Enter valid email</div>}
+                <label htmlFor="password1">Password </label>
+                <input
+                  type="password"
+                  id="password1"
+                  value={password1}
+                  placeholder="Atleast 6 characters"
+                  onChange={password1Handler}
+                />
+                {password1Error && (
+                  <div className="error">Enter valid password</div>
+                )}
+                <label htmlFor="password2">Password Again</label>
+                <input
+                  type="password"
+                  id="password2"
+                  value={password2}
+                  placeholder="Atleast 6 characters"
+                  onChange={password2Handler}
+                />
+                {password2Error && (
+                  <div className="error">password mismatching</div>
+                )}
+              </div>
+              <button className="signup__button" onClick={buttonHandler}>
+                Continue
+              </button>
+              {sucess && (
+                <div>
+                  <ToastContainer
+                    position="top-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                  />
+                </div>
+              )}
+              <div className="account">
+                Already have an account? <Link to="/signin">Sign in</Link>
+              </div>
+              <div className="description">
+                By creating an account or logging in, you agree to Amazon's
+                <Link to="https://www.amazon.in/gp/help/customer/display.html/ref=ap_register_notification_condition_of_use?ie=UTF8&nodeId=200545940">
+                  Conditions of Use
+                </Link>{" "}
+                and{"  "}
+                <Link to="https://www.amazon.in/gp/help/customer/display.html/ref=ap_register_notification_privacy_notice?ie=UTF8&nodeId=200534380">
+                  Privacy Policy
+                </Link>
+                .
+              </div>
             </div>
-          )}
-          <div className="account">
-            Already have an account? <Link to="/signin">Sign in</Link>
-          </div>
-          <div className="description">
-            By creating an account or logging in, you agree to Amazon's
-            <Link to="https://www.amazon.in/gp/help/customer/display.html/ref=ap_register_notification_condition_of_use?ie=UTF8&nodeId=200545940">
-              Conditions of Use
-            </Link>{" "}
-            and{"  "}
-            <Link to="https://www.amazon.in/gp/help/customer/display.html/ref=ap_register_notification_privacy_notice?ie=UTF8&nodeId=200534380">
-              Privacy Policy
-            </Link>
-            .
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 

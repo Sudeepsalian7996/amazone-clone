@@ -26,8 +26,8 @@ exports.signup=async(req,res)=>{
             password:hash ,
             phone:phone
            })
-           await data.save()
-           res.json({success:true,message:"SignUp successfull,Login to enter a page"})
+           const response = await data.save()
+           res.json({success:true,token:createToken(response._id)})
       })
    
    }catch(err){

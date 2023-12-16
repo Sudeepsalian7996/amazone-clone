@@ -95,6 +95,7 @@ body {
     color: white;
     display: flex;
     gap: 20px;
+    font-size: 15px;
 }
 
 .sign__button > span > a,
@@ -135,6 +136,12 @@ body {
 }
 .basket__icon{
     color: white;
+}
+
+.basket__count {
+    color: orange;
+    font-size: 15px;
+    font-weight: bolder;
 }
 
 .basket__container:hover {

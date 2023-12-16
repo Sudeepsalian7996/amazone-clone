@@ -28,10 +28,19 @@
     margin-bottom: 3px;
 }
 
-p {
+p{
     font-size: 14px;
     margin: 0;
     line-height: 24px;
+}
+
+p > a {
+    color: white;
+    text-decoration: none;
+}
+
+p > a:hover {
+    text-decoration: underline;
 }
 
 .contact__section {
