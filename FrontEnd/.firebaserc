@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "e-clone-25d87"
-  }
+    "default": "e-clone-25d87",
+    "amazon-clone": "e-clone-25d87",
+    "amazon-FE": "fe-1bf23"
+  },
+  "targets": {},
+  "etags": {}
 }

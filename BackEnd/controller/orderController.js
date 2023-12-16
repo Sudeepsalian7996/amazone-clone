@@ -22,7 +22,12 @@ exports.addOrder=async (req,res,next)=>{
 
 exports.getOrder = async (req, res) => {
     try{
-
+        const userId = req.user[0]._id;
+        const data = await orderSchema.find({userId : userId})
+        .populate('productId')
+        .populate('userId')
+        .exec()
+        res.json({success:true, data:data})
     }catch(err){
         res.json({success:false, Error:err})
     }

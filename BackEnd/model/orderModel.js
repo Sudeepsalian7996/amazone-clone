@@ -5,6 +5,10 @@ const orderSchema = new Schema ({
     paymentId: {
         type : String
     },
+    date:{
+        type : Date,
+        default: new Date()
+    },
     userId: {
         type: Schema.Types.ObjectId,
         ref: "User"

@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { AiOutlineStar } from "react-icons/ai";
+import Loader from "../common/Loader";
 import "../../styles/ProductDetail.css";
 import { CartContext } from "../../context/CartCount";
 
@@ -12,6 +13,7 @@ const ProductDetail = () => {
   const [data, setData] = useState([]);
   const [sucess, setSucess] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   const cartCount = useContext(CartContext);
 
@@ -37,10 +39,12 @@ const ProductDetail = () => {
 
   const apiCall = async () => {
     try {
+      setLoader(true);
       const data = await axios.get(
         `${import.meta.env.VITE_HOSTNAME}/products/product-detail/${id}`
       );
       setData(data?.data);
+      setLoader(false);
     } catch (err) {
       console.log("error in api call->", err);
     }
@@ -141,9 +145,8 @@ const ProductDetail = () => {
 
     var pay = new window.Razorpay(options);
     pay.open();
-    console.log("pay>>", pay);
+
     pay.on("payment.failed", async function () {
-      console.log("payment failed console");
       pay.close();
       setOrderSuccess(true);
       toast.error("Payment issue! Try again", {
@@ -161,93 +164,103 @@ const ProductDetail = () => {
 
   return (
     <>
-      <div className="product_detail__container">
-        <div className="product__left">
-          <div className="product_image__container">
-            <img
-              src={data?.data?.imageUrl}
-              className="product__image"
-              alt="product image"
-            />
-          </div>
-          <div className="button__container">
-            <button
-              className="add_cart__button"
-              onClick={cartHandler}
-              disabled={sucess}
-            >
-              {sucess ? "Added to cart" : "Add to cart"}
-            </button>
+      {loader ? (
+        <>
+          <Loader />
+        </>
+      ) : (
+        <div className="product_detail__container">
+          <div className="product__left">
+            <div className="product_image__container">
+              <img
+                src={data?.data?.imageUrl}
+                className="product__image"
+                alt="product image"
+              />
+            </div>
+            <div className="button__container">
+              <button
+                className="add_cart__button"
+                onClick={cartHandler}
+                disabled={sucess}
+              >
+                {sucess ? "Added to cart" : "Add to cart"}
+              </button>
 
-            <button className="buy__now" onClick={buyNowHandler}>
-              Buy now
-            </button>
+              <button className="buy__now" onClick={buyNowHandler}>
+                Buy now
+              </button>
+            </div>
+          </div>
+          {sucess && (
+            <div>
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </div>
+          )}
+          {orderSuccess && (
+            <div>
+              <ToastContainer
+                position="top-center"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </div>
+          )}
+          <div className="product_right__container">
+            <div className="product__right">
+              <div className="product__title">
+                {data?.data?.title.length < 67
+                  ? `${data?.data?.title} Comfortable and Trendy for Every Occasion on Amazon`
+                  : data?.data?.title}
+              </div>
+              <div className="rating">
+                <span>{data?.data?.rating}</span>{" "}
+                {starRating(data?.data?.rating)}
+              </div>
+              <div className="product__MRP">
+                M.R.P : &#8377;<s>{data?.data?.price}.00</s>
+              </div>
+              <div className="product__deal">
+                Deal of the day : <span>&#8377;{totalPrice}.00</span>
+              </div>
+              <div className="product__save">
+                You save :{" "}
+                <span>
+                  {" "}
+                  &#8377;{`${savedPrice}.00 (${data?.data?.offer}%)`}
+                </span>
+              </div>
+              <div className="product__delivery">
+                FREE DELIVERY : {currentMonth} {currentDate} -{" "}
+                {currentDate < 29 ? currentDate + 2 : 1}
+              </div>
+              <div className="proudct__description">
+                <span>About this item: </span>
+                <br />
+                {data?.data?.description}
+              </div>
+            </div>
           </div>
         </div>
-        {sucess && (
-          <div>
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </div>
-        )}
-        {orderSuccess && (
-          <div>
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </div>
-        )}
-        <div className="product_right__container">
-          <div className="product__right">
-            <div className="product__title">
-              {data?.data?.title.length < 67
-                ? `${data?.data?.title} Comfortable and Trendy for Every Occasion on Amazon`
-                : data?.data?.title}
-            </div>
-            <div className="rating">
-              <span>{data?.data?.rating}</span> {starRating(data?.data?.rating)}
-            </div>
-            <div className="product__MRP">
-              M.R.P : &#8377;<s>{data?.data?.price}.00</s>
-            </div>
-            <div className="product__deal">
-              Deal of the day : <span>&#8377;{totalPrice}.00</span>
-            </div>
-            <div className="product__save">
-              You save :{" "}
-              <span> &#8377;{`${savedPrice}.00 (${data?.data?.offer}%)`}</span>
-            </div>
-            <div className="product__delivery">
-              FREE DELIVERY : {currentMonth} {currentDate} -{" "}
-              {currentDate < 29 ? currentDate + 2 : 1}
-            </div>
-            <div className="proudct__description">
-              <span>About this item: </span>
-              <br />
-              {data?.data?.description}
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
     </>
   );
 };

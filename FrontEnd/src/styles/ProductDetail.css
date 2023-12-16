@@ -118,7 +118,7 @@
     }
     .button__container {
         display: flex;
-        gap: 0px;
+        gap: 20px;
         margin-left: 0px;
     }
     .product_right__container {
@@ -133,5 +133,11 @@
     }
     .product__right {
         margin-top: 25px;
+    }
+    .add_cart__button  {
+        padding: 10px 25px;
+    }
+    .buy__now {
+        padding: 10px 34px;
     }
 }
