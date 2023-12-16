@@ -93,7 +93,7 @@ const OrderCard = ({ product, refresh }) => {
           <div className="placed__date">
             <div>ORDER PLACED</div>
             <div className="font_change">
-              {`${currentDate}-${currentMonth}-${currentYear}}`}
+              {`${currentDate}-${currentMonth}-${currentYear}`}
             </div>
           </div>
           <div className="total">

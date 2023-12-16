@@ -3,12 +3,13 @@
     gap: 20px;
     background-color: #e3e6e6;
     padding: 28px 18px;
+    padding-bottom: 60px;
 }
 
 .cart_item__container {
     width: 75%;
     background-color: white;
-    padding: 28px 18px;
+    padding: 28px 20px;
     position: relative;
 }
 
@@ -32,10 +33,6 @@
 .cart__items {
     display: flex;
     gap: 18px;
-}
-
-.image__container {
-    padding-left: 45px;
 }
 
 .image__container img {
@@ -146,6 +143,7 @@
 }
 
 .buy__button {
+    display: none;
     border: none;
     background-color: #edc600;
     padding: 7px;
@@ -165,13 +163,13 @@
         flex-direction: column-reverse;
     }
     .right__card{
-        width: 85%;
+        width: 89%;
     }
     .cart__items {
         display: block;
     }
     .cart_item__container{
-        width: 85%;
+        width: 89%;
     }
     .cart_items__feature input{
         width: 10%;
@@ -181,5 +179,10 @@
     }
     .item__title{
         width: 100%;
+    }
+    .cart__items a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

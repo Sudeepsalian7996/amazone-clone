@@ -44,57 +44,6 @@ const CartItems = () => {
     setRender((prev) => prev + 1);
   };
 
-  const buyNowHandler = async () => {
-    var options = {
-      key: "rzp_test_UafHRYeLm92SQK",
-      key_secret: "wuLxONl4exspaeHCygohimqC",
-      amount: parseInt(totalAmount * 100),
-      currency: "INR",
-      order_receipt: "order_rcptid_",
-      name: "amazon-clone",
-      description: "for testing purpose",
-      handler: function (response) {
-        console.log("response.>>>", response);
-        // toast.success("Payment Successful");
-        // const paymentId = response.razorpay_payment_id;
-        // const orderInfo = {
-        //   cartItems,
-        //   addressInfo,
-        //   date: new Date().toLocaleString("en-US", {
-        //     month: "short",
-        //     day: "2-digit",
-        //     year: "numeric",
-        //   }),
-        //   email: JSON.parse(localStorage.getItem("user")).user.email,
-        //   userid: JSON.parse(localStorage.getItem("user")).user.uid,
-        //   paymentId,
-        // };
-
-        // try {
-        //   const result = addDoc(collection(fireDB, "orders"), orderInfo);
-        // } catch (error) {
-        //   console.log(error);
-        // }
-      },
-
-      theme: {
-        color: "#3399cc",
-      },
-    };
-
-    var pay = new window.Razorpay(options);
-    pay.open();
-    console.log("pay>>", pay);
-    pay.on("payment.failed", async function () {
-      try {
-        // const key = resource.data.order.id;
-        console.log("payemnet failed>>");
-      } catch (err) {
-        console.log("error in payment failed section", err);
-      }
-    });
-  };
-
   return (
     <>
       {loader ? (

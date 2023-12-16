@@ -1,7 +1,6 @@
 .footer__container {
     background-color: #231f20;
     color: white;
-    margin-top: 50px;
     padding: 50px 150px;
 }
 
@@ -17,7 +16,6 @@
         gap: 25px;
     }
     .footer__container {
-        margin-top: 50px;
         padding: 20px 20px;
     }    
 }

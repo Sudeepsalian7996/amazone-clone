@@ -80,6 +80,7 @@
     .card {
         width: 92%;
         padding: 12px;
+        padding-right: 18px;
     }
     .card__image{
         width: 80%;
