@@ -7,6 +7,8 @@ function ProductDiff({ data }) {
   const context = useContext(CartContext);
   let search = context.searchText;
 
+  const token = localStorage.getItem("token");
+
   const getRandomSubset = (array, subsetSize) => {
     const shuffledArray = array.slice().sort(() => Math.random() - 0.5);
     return shuffledArray.slice(0, subsetSize);
@@ -34,7 +36,11 @@ function ProductDiff({ data }) {
               })
               .map((item, index) => (
                 <div className="card__image__container" key={index}>
-                  <Link to={`/getproduct-detail/${item._id}`}>
+                  <Link
+                    to={`${
+                      token ? `/getproduct-detail/${item._id}` : "/signin"
+                    }`}
+                  >
                     <img
                       src={item.imageUrl}
                       alt="product image"
@@ -67,7 +73,11 @@ function ProductDiff({ data }) {
               })
               .map((item, index) => (
                 <div className="card__image__container" key={index}>
-                  <Link to={`/getproduct-detail/${item._id}`}>
+                  <Link
+                    to={`${
+                      token ? `/getproduct-detail/${item._id}` : "/signin"
+                    }`}
+                  >
                     <img
                       src={item.imageUrl}
                       alt="product image"
@@ -100,7 +110,11 @@ function ProductDiff({ data }) {
               })
               .map((item, index) => (
                 <div className="card__image__container" key={index}>
-                  <Link to={`/getproduct-detail/${item._id}`}>
+                  <Link
+                    to={`${
+                      token ? `/getproduct-detail/${item._id}` : "/signin"
+                    }`}
+                  >
                     <img
                       src={item.imageUrl}
                       alt="product image"
@@ -132,7 +146,11 @@ function ProductDiff({ data }) {
               })
               .map((item, index) => (
                 <div className="card__image__container" key={index}>
-                  <Link to={`/getproduct-detail/${item._id}`}>
+                  <Link
+                    to={`${
+                      token ? `/getproduct-detail/${item._id}` : "/signin"
+                    }`}
+                  >
                     <img
                       src={item.imageUrl}
                       alt="product image"

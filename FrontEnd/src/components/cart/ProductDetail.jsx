@@ -100,10 +100,13 @@ const ProductDetail = () => {
       console.log("error in api call->", err);
     }
   };
-  const savedPrice =
-    (Number(data?.data?.price) * Number(data?.data?.offer)) / 100;
+  const savedPrice = parseFloat(
+    ((Number(data?.data?.price) * Number(data?.data?.offer)) / 100).toFixed(2)
+  );
 
-  const totalPrice = Number(data?.data?.price) - savedPrice;
+  const totalPrice = parseFloat(
+    (Number(data?.data?.price) - savedPrice).toFixed(2)
+  );
 
   const date = new Date();
   const options = { month: "short" };
@@ -161,6 +164,9 @@ const ProductDetail = () => {
       });
     });
   };
+
+  //scroll to top
+  window.scrollTo(0, 0);
 
   return (
     <>
@@ -239,14 +245,11 @@ const ProductDetail = () => {
                 M.R.P : &#8377;<s>{data?.data?.price}.00</s>
               </div>
               <div className="product__deal">
-                Deal of the day : <span>&#8377;{totalPrice}.00</span>
+                Deal of the day : <span>&#8377;{totalPrice}</span>
               </div>
               <div className="product__save">
                 You save :{" "}
-                <span>
-                  {" "}
-                  &#8377;{`${savedPrice}.00 (${data?.data?.offer}%)`}
-                </span>
+                <span> &#8377;{`${savedPrice} (${data?.data?.offer}%)`}</span>
               </div>
               <div className="product__delivery">
                 FREE DELIVERY : {currentMonth} {currentDate} -{" "}

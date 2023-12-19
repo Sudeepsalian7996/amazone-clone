@@ -28,6 +28,9 @@ const CartItemCard = ({ product, cart, deleteRender }) => {
     }
   };
 
+  //scroll to top
+  window.scrollTo(0, 0);
+
   return (
     <>
       <div className="cart__items">
@@ -51,12 +54,6 @@ const CartItemCard = ({ product, cart, deleteRender }) => {
             />
           </div>
           <div className="cart_items__feature">
-            {/* <input
-              type="text"
-              placeholder="Qty:"
-              value={quantity}
-              onChange={quantityHandler}
-            /> */}
             <div className="quantity">
               Qty: <strong>{quantity}</strong>
             </div>

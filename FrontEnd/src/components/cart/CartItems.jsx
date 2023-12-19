@@ -63,6 +63,7 @@ const CartItems = () => {
                   ? item
                   : item?.title?.toLowerCase()?.includes(search?.toLowerCase());
               })
+              .reverse()
               .map((item, index) => (
                 <CartItemCard
                   key={index}
@@ -91,9 +92,7 @@ const CartItems = () => {
               Subtotal ({data?.data?.length} items):{" "}
               <b>&#8377;{totalAmount}.00</b>
             </div>
-            <button className="buy__button" onClick={buyNowHandler}>
-              Proceed to buy
-            </button>
+            <button className="buy__button">Proceed to buy</button>
             <div className="emi__description">
               Your order qualifies for EMI with valid credit cards (not
               available on purchase of Gold, Jewelry, Gift cards and Amazon pay

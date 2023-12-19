@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../../styles/ProductCard.css";
-import Product from "./Product";
 
 function ProductCard({ product }) {
+  const token = localStorage.getItem("token");
   return (
     <div className="product__card">
       <div className="image__container">
-        <Link to={`/getproduct-detail/${product._id}`}>
+        <Link to={`${token ? `/getproduct-detail/${product._id}` : "/signin"}`}>
           <img
             src={product.imageUrl}
             className="product__image"
@@ -16,7 +16,7 @@ function ProductCard({ product }) {
         </Link>
       </div>
       <div className="product__offers">
-        <div className="percentage__offer">Up to {product?.offer} off</div>
+        <div className="percentage__offer">Up to {product?.offer}% off</div>
         <div className="offer__desc">{`${
           product.offer > 20
             ? product?.offer > 50

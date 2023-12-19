@@ -102,6 +102,17 @@
     }   
  }
 
+ @media (min-width:700px) and (max-width:1200px) {
+    .card {
+        width: 90%;
+    } 
+    .cards{
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 30px;
+    }
+ }
+
 
 
 

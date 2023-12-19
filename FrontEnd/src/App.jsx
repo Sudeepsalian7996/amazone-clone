@@ -1,8 +1,7 @@
-import { useState } from "react";
 import Header from "./components/common/Header";
 import Home from "./components/Home/Home";
 import SignIn from "./components/login/SignIn";
-import SignUp from "./components/login/Signup";
+import SignUp from "./components/login/SignUp";
 import ProductDetail from "./components/cart/ProductDetail";
 import "./App.css";
 import Footer from "./components/common/Footer";

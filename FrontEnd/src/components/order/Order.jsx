@@ -38,6 +38,9 @@ const Order = () => {
   const refreshHandler = () => {
     setRefresh(1);
   };
+
+  //scroll to top
+  window.scrollTo(0, 0);
   return (
     <>
       {loader ? (

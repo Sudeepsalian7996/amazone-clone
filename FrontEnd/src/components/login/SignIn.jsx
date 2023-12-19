@@ -94,6 +94,9 @@ function SignIn() {
       setPassword1("");
     }
   };
+
+  //scroll to top
+  window.scrollTo(0, 0);
   return (
     <>
       {loader ? (

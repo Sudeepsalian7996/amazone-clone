@@ -86,6 +86,18 @@ const OrderCard = ({ product, refresh }) => {
     });
   };
 
+  //price with offer calculate
+  const savedPrice = parseFloat(
+    (
+      (Number(product?.productId?.price) * Number(product?.productId?.offer)) /
+      100
+    ).toFixed(2)
+  );
+
+  const totalPrice = parseFloat(
+    (Number(product?.productId?.price) - savedPrice).toFixed(2)
+  );
+
   return (
     <div className="layout">
       <div className="left__layout">
@@ -98,9 +110,7 @@ const OrderCard = ({ product, refresh }) => {
           </div>
           <div className="total">
             <div>TOTAL</div>
-            <div className="font_change">
-              &#8377;{product?.productId?.price}.00
-            </div>
+            <div className="font_change">&#8377;{totalPrice}</div>
           </div>
           <div className="ship_to">
             <div>SHIP TO</div>
@@ -115,7 +125,7 @@ const OrderCard = ({ product, refresh }) => {
           <div className="deliver__desc">Package was handed to resident</div>
           <div className="order_product_detail__container">
             <div className="order_image__container">
-              <img src={product?.productId?.imageUrl} alt="" />
+              <img src={product?.productId?.imageUrl} alt="product image" />
             </div>
             <div className="product__description">
               <div className="order_product__title">
