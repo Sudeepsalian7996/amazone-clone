@@ -31,6 +31,7 @@
 }
 
 .cart__items {
+    position: relative;
     display: flex;
     gap: 18px;
 }
@@ -98,6 +99,8 @@
 }
 
 .item__price {
+    position: absolute;
+    right: 10px;
     font-weight: bold;
     margin-top: 20px;
 }
@@ -184,5 +187,11 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+}
+
+@media (max-width:1200px) {
+    .item__price {
+        position: initial;
     }
 }
